@@ -24,15 +24,6 @@ fetch(endpoint)
 	sorted.forEach((currency, index) => {
 		const {Name, CoinName, ImageUrl} = currency;
 		symbols[Name] = CoinName.trim();
-
-		// download the image for future use
-		if (ImageUrl) {
-			spinner.text = `${chalk.gray(index)} ${Name}`;
-			spinner.render();
-			const res = request('get', `https://www.cryptocompare.com${ImageUrl}`);
-			fs.writeFileSync(`images/${Name.replace(/[:*?\\/<>|]/g, '_')}.${ImageUrl.split('.').pop()}`, res.getBody());
-			imagesSaved += 1;
-		}
 	});
 
 	spinner.succeed([`${imagesSaved} images saved to /images`]);
